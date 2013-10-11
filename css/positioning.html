@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CSS Positioning is not "Rocket Science"</title>
+    <style type="text/css">
+
+            body {
+                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            }
+
+            body p {
+                width:610px;
+                text-align: justify;
+            }
+
+            .box {
+                padding: 10px;
+                border:1px solid red;
+                width:400px;
+                height: 100px;
+            }
+
+
+            .fixed-position-box {
+                position:fixed;
+                top:20px;
+                right:20px
+            }
+
+            .relative-position-box {
+                position:relative;
+                top:-100px;
+                left:20px;
+                background:#fff;
+            }
+
+            .relative-position-box-support {
+                position:relative;
+                top:0px;
+                left:0px;
+                border:1px dashed #000;
+            }
+
+            .box.absolute {
+                border-color:red;
+            }
+
+            .box.static {
+                border-color:purple;
+            }
+
+            .box.fixed {
+                border-color:orange;
+            }
+
+            .box.relative {
+                border-color:blue;
+            }
+
+            .box.support {
+                border-color:gray;
+                border-style: dashed;
+            }
+
+        h3 {
+            font-weight: lighter;
+            margin-top:0px;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>CSS Positioning is not "<strike>Computer</strike>Rocket Science"</h1>
+
+    <h2>Static</h2>
+    <p>
+        HTML elements are positioned static by default.
+        A static positioned element is always positioned according to the normal flow of the page.
+        Static positioned elements are not affected by the top, bottom, left, and right properties.
+    </p>
+    <div class="box static-position-box static">
+
+        <pre>
+            #static-position-box {
+
+
+
+            }
+        </pre>
+    </div>
+
+
+
+    <h2>Fixed</h2>
+    <p>
+        An element with fixed position is positioned relative to the browser window.
+        It will not move even if the window is scrolled (checkout the upper right corner).
+    </p>
+    <div class="box fixed-position-box fixed">
+        <pre>
+            #fixed-position-box {
+                position:fixed;
+                top:20px;
+                right:20px
+            }
+        </pre>
+    </div>
+    <p>
+        <strong>Note:</strong> IE7 and IE8 support the fixed value only if a <strong>!DOCTYPE</strong> is specified. (Why will you use that?)
+    </p>
+
+
+    <h2>Relative</h2>
+    <p>A relative positioned element is positioned relative to its normal position.</p>
+    <div class="box relative-position-box-support support relative">
+        <pre>
+            #relative-position-box {
+                position:relative;
+                top:20px;
+                left:20px
+            }
+        </pre>
+    </div>
+    <div class="box relative-position-box">
+        <pre>
+            #relative-position-box {
+                position:relative;
+                top:20px;
+                left:20px
+            }
+        </pre>
+    </div>
+    <p style="position:relative;top:-100px;">The content of relatively positioned elements can be moved and overlap other elements, but the reserved space for the element is still preserved in the normal flow:</p>
+    <div class="box relative-position-box-support support relative" style="position:relative;top:-100px;">
+        <pre>
+
+        </pre>
+    </div>
+    <div class="box relative-position-box relative" style="position:relative;top:-120px;left:0px;border:1px solid green">
+        <pre>
+
+        </pre>
+    </div>
+    <div class="box relative-position-box relative" style="position:relative;top:-320px;">
+        <pre>
+            #relative-position-box {
+                position:relative;
+                top:20px;
+                left:20px
+            }
+        </pre>
+    </div>
+    <p style="position:relative;top:-220px">One last thing. Relatively positioned elements are often used as container blocks for absolutely positioned elements. Carry on to the next section.</p>
+
+    <section style="position:relative;top:-200px;">
+
+        <h2>Absolute</h2>
+        <p>
+            An absolute position element is positioned relative to the first parent element that has a position other than static (relative, fixed and other absolutes).
+        </p>
+
+        <div class="box absolute" style="width:900px;height:300px;position:relative;">
+            <div class="box absolute" style="position:absolute;top:20px;left:20px;">
+                <pre>
+                #absolute-position-box-1 {
+                    position:absolute;
+                    top:20px;
+                    left:20px
+                }
+                </pre>
+            </div>
+
+            <div class="box absolute" style="position:absolute;bottom:20px;right:20px;">
+                <pre>
+                #absolute-position-box-3 {
+                    position:absolute;
+                    bottom:20px;
+                    right:20px
+                }
+                </pre>
+            </div>
+
+            <div class="box absolute" style="position:absolute;top:20px;right:20px;">
+                <div class="box absolute" style="position:absolute;bottom:10px;right:10px;width:200px;height:50px;font-size:10px;border:1px solid green">
+                    <pre style="margin-top:-5px;">
+#absolute-position-box-2 {
+    position:absolute;
+    bottom:10px;
+    right:10px
+}
+                    </pre>
+                </div>
+            </div>
+        </div>
+
+        <p>
+            If no element is found, the containing block is the html node. In this case think of <strong>position:static</strong> but being scroll sensible.
+            (scroll to the beginning of this page and checkout the upper right corner).
+        </p>
+
+        <p>
+            Absolutely positioned elements are removed from the normal flow. The document and other elements behave like the absolutely positioned element does not exist.
+            Absolutely positioned elements can overlap other elements.
+        </p>
+
+    </section>
+    <div class="box absolute" style="position:absolute;top:160px;right:20px;">
+            <pre>
+                #absolute-position-box {
+                    position:absolute;
+                    top:160px;
+                    right:20px
+                }
+            </pre>
+    </div>
+
+    <section style="position:relative;top:-200px;">
+        <h1>Overlapping Elements</h1>
+        <p>
+            When elements are positioned outside the normal flow, they can overlap other elements.
+            The z-index property specifies the stack order of an element (which element should be placed in front of, or behind, the others).
+            An element can have a positive or negative stack order:
+        </p>
+        <div class="box absolute" style="width:500px;height:280px;position:relative;">
+
+            <div class="box absolute absolute" style="position:absolute;top:20px;left:20px;">
+                <pre>
+                #absolute-position-box-1 {
+                    position:absolute;
+                    bottom:20px;
+                    left:20px
+                }
+                </pre>
+            </div>
+
+            <div class="box absolute absolute" style="position:absolute;top:120px;left:40px;background:white;">
+                <pre>
+                #absolute-position-box-2{
+                   position:absolute;
+                   bottom:40px;
+                   left:40px
+                }
+                </pre>
+            </div>
+    </div>
+
+    <div class="box absolute" style="width:500px;height:280px;margin-top:20px;position:relative;">
+            <div class="box absolute absolute" style="position:absolute;top:20px;left:20px;z-index:999;background:white;">
+                <pre>
+                #absolute-position-box-3 {
+                    position:absolute;
+                    bottom:20px;
+                    left:20px
+                    z-index:999;
+                }
+                </pre>
+            </div>
+
+            <div class="box absolute absolute" style="position:absolute;top:120px;left:40px;background:white;">
+                <pre>
+                #absolute-position-box-4{
+                   position:absolute;
+                   bottom:40px;
+                   left:40px
+                }
+                </pre>
+            </div>
+
+
+        </div>
+        <p><strong>Note:</strong> If two positioned elements overlap, without a z-index specified, the element positioned last in the HTML code will be shown on top.</p>
+    </section>
+
+    <section style="position:relative;top:-200px;">
+        <h1>Conclusions</h1>
+        <p>This isn't functional programming or compiler theory, so just get used to the notation.</p>
+    </section>
+
+    <section style="position:relative;top:-200px;">
+        <h1>Credits</h1>
+        <p>[1] <a href="http://www.w3schools.com/css/css_positioning.asp" target="_blank">CSS Positioning at W3C</a> (almost all the text here came from that article)</p>
+    </section>
+
+</body>
+</html>
